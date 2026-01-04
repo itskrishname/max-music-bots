@@ -69,7 +69,7 @@
     "DEEP_API": {
       "description": "(Optional) DeepAI API key for enabling AI-powered features. Get it from https://deepai.org/.",
       "required": false,
-      "value": ""
+      "value": "84273e73-38f2-404d-8959-c9d4ab946c1a"
     },
     "HEROKU_API_KEY": {
       "description": "Your Heroku account API key, required if you want the bot to support auto-updates or dynamic deployments.",

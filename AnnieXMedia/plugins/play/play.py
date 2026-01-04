@@ -608,6 +608,7 @@ async def play_music(client, CallbackQuery, _):
             forceplay=bool(forceplay),
         )
 
+        await play_logs(CallbackQuery.message, streamtype="youtube", user=CallbackQuery.from_user)
         await mystic.delete()
 
     except Exception as e:
@@ -713,7 +714,7 @@ async def play_playlists_command(client, CallbackQuery, _):
             forceplay=bool(forceplay),
         )
 
-        await play_logs(CallbackQuery.message, streamtype=log_label)
+        await play_logs(CallbackQuery.message, streamtype=log_label, user=CallbackQuery.from_user)
         await mystic.delete()
 
     except Exception as e:

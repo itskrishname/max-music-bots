@@ -9,11 +9,7 @@ assistants = []
 assistantids = []
 
 GROUPS_TO_JOIN = [
-    "CertifiedDiscussion",
-    "CertifiedCoders",
-    "CertifiedCodes",
-    "CertifiedDevs",
-    "CertifiedNetwork",
+    "SECRECT_BOT_UPDATES",
 ]
 
 

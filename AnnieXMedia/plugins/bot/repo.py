@@ -34,7 +34,7 @@ async def show_repo(_, msg):
 
     try:  
         await msg.reply_photo(
-            photo="https://telegra.ph/file/58afe55fee5ae99d6901b.jpg",
+            photo="https://files.catbox.moe/djrmqk.jpg",
             caption=repo_caption,
             reply_markup=reply_markup
         )

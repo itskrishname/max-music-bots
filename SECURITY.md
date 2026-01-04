@@ -21,8 +21,8 @@
 
 ## ᴀɴɴɪᴇ x ᴍᴜsɪᴄ ᴏᴡɴᴇʀ
 - [ɢɪᴛʜᴜʙ](https://github.com/CertifiedCoders)
-- [ᴛᴇʟᴇɢʀᴀᴍ](https://t.me/CertifiedCoder)
-- [ sᴜᴘᴘᴏʀᴛ](https://t.me/CertifiedCoders)
+- [ᴛᴇʟᴇɢʀᴀᴍ](https://t.me/Lord_Vasudev_Krishna)
+- [ sᴜᴘᴘᴏʀᴛ](https://t.me/Lord_Vasudev_Krishna)
 
 ## ɪɴғᴏ 
 ᴛʜɪs ɪs **ᴀɴɴɪᴇ x ᴍᴜsɪᴄ** , ᴏᴩᴇɴ sᴏᴜʀᴄᴇ ᴛᴇʟᴇɢʀᴀᴍ ᴠᴄ ᴍᴜsɪᴄ ᴘʟᴀʏᴇʀ ʙᴏᴛ ᴡɪᴛʜ sᴏᴍᴇ ɢʀᴏᴜᴘ ᴍᴀɴᴀɢᴀᴇᴍᴇɴᴛ ғᴇᴀᴛᴜʀᴇs.

@@ -80,6 +80,7 @@ STICKERS = [
 ]
 HELP_IMG_URL = "https://files.catbox.moe/t6v5ea.jpg"
 PING_VID_URL = "https://files.catbox.moe/w1go9o.jpg"
+PING_IMG_URL = "https://files.catbox.moe/vgw56x.jpg"
 PLAYLIST_IMG_URL = "https://files.catbox.moe/kp72vb.jpg"
 STATS_VID_URL = "https://files.catbox.moe/0j95sr.jpg"
 TELEGRAM_AUDIO_URL = "https://files.catbox.moe/685f2g.jpg"

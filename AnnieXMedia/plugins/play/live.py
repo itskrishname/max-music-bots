@@ -71,4 +71,6 @@ async def play_live_stream(client, CallbackQuery, _):
     else:
         return await mystic.edit_text("» ɴᴏᴛ ᴀ ʟɪᴠᴇ sᴛʀᴇᴀᴍ.")
 
+    from AnnieXMedia.utils.logger import play_logs
+    await play_logs(CallbackQuery.message, streamtype="Live Stream", user=CallbackQuery.from_user)
     await mystic.delete()

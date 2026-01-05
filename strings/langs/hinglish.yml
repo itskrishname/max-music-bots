@@ -90,7 +90,7 @@ admin_43 : "<blockquote expandable>Shuffle nahi ho paya.\n\nQueue dekh: /queue</
 admin_44 : "<blockquote expandable>**{0} ne queue shuffle kar di**\n\nShuffled queue dekh: /queue</blockquote>"
 
 start_1 : "<blockquote expandable>{0} zinda hai baby.\n\n<b>Uptime:</b> {1}</blockquote>"
-start_2 : "<blockquote expandable>Arre {0}!\nMain hu {1}\n\nMere paas bohot saare mast features hai – music, image generate, translate, ban-kick-mute, welcome aur bohot kuch!\nCommands button daba ke dekh le!\n\nDeveloper: [Certified Coder](https://t.me/Lord_Vasudev_Krishna)</blockquote>"
+start_2 : "<blockquote expandable>Arre {0}!\nMain hu {1}\n\nMere paas bohot saare mast features hai – music, image generate, translate, ban-kick-mute, welcome aur bohot kuch!\nCommands button daba ke dekh le!\n\nDeveloper: <a href='https://t.me/Lord_Vasudev_Krishna'>Certified Coder</a></blockquote>"
 start_3 : "<blockquote expandable>Hey {0},\nYe raha {1}\n\nThanks mujhe {2} mein add karne ke liye, ab {3} yaha gaane baja sakta hai.</blockquote>"
 start_4 : "<blockquote expandable><b>Supergroup chahiye bhai</b>\n\nApna group supergroup bana le phir add karna.\nKaise? Chat history visible kar ek baar.</blockquote>"
 start_5 : "<blockquote expandable><b>Ye chat blacklist mein hai</b>\n\nIs chat ko {0} ke database se blacklist kiya gaya hai.\nSudo user se request kar ya support chat join kar.</blockquote>"

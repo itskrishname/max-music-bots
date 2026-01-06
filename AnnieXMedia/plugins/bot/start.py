@@ -12,6 +12,7 @@ from AnnieXMedia import app
 from AnnieXMedia.misc import _boot_
 from AnnieXMedia.plugins.sudo.sudoers import sudoers_list
 from AnnieXMedia.utils import bot_sys_stats
+from AnnieXMedia.utils.media_helper import send_smart_media
 from AnnieXMedia.utils.database import (
     add_served_chat,
     add_served_user,
@@ -51,10 +52,13 @@ async def start_pm(client, message: Message, _):
 
         if name.startswith("help"):
             keyboard = first_page(_)
-            return await message.reply_photo(
-                photo=HELP_IMG_URL,
+            return await send_smart_media(
+                client=client,
+                chat_id=message.chat.id,
+                url_or_file=HELP_IMG_URL,
                 caption=_["help_1"].format(config.SUPPORT_CHAT),
                 reply_markup=keyboard,
+                reply_to_message_id=message.id
             )
 
         if name.startswith("sud"):
@@ -132,12 +136,15 @@ async def start_pm(client, message: Message, _):
         served_chats_coro, served_users_coro, stats_coro
     )
 
-    await message.reply_photo(
-        random.choice(START_VIDS),
+    await send_smart_media(
+        client=client,
+        chat_id=message.chat.id,
+        url_or_file=random.choice(START_VIDS),
         caption=random.choice(AYUV).format(
             message.from_user.mention, app.mention, UP, DISK, CPU, RAM, len(served_users), len(served_chats)
         ),
         reply_markup=InlineKeyboardMarkup(out),
+        reply_to_message_id=message.id
     )
 
     if await is_on_off(2):
@@ -158,10 +165,13 @@ async def start_gp(client, message: Message, _):
     out = start_panel(_)
     uptime = int(time.time() - _boot_)
     try:
-        await message.reply_photo(
-            random.choice(START_VIDS),
+        await send_smart_media(
+            client=client,
+            chat_id=message.chat.id,
+            url_or_file=random.choice(START_VIDS),
             caption=_["start_1"].format(app.mention, get_readable_time(uptime)),
             reply_markup=InlineKeyboardMarkup(out),
+            reply_to_message_id=message.id
         )
     except:
         pass
@@ -198,8 +208,10 @@ async def welcome(client, message: Message):
                     return await app.leave_chat(message.chat.id)
 
                 out = start_panel(_)
-                await message.reply_photo(
-                    random.choice(START_VIDS),
+                await send_smart_media(
+                    client=client,
+                    chat_id=message.chat.id,
+                    url_or_file=random.choice(START_VIDS),
                     caption=_["start_3"].format(
                         message.from_user.mention,
                         app.mention,
@@ -207,6 +219,7 @@ async def welcome(client, message: Message):
                         app.mention,
                     ),
                     reply_markup=InlineKeyboardMarkup(out),
+                    reply_to_message_id=message.id
                 )
                 await add_served_chat(message.chat.id)
                 await message.stop_propagation()

@@ -13,6 +13,9 @@ from AnnieXMedia.utils.database import (
     get_client,
     get_served_chats,
     get_served_users,
+    is_broadcasting_active,
+    set_broadcasting_active,
+    unset_broadcasting_active,
 )
 from AnnieXMedia.utils.decorators.language import language
 from AnnieXMedia.utils.formatters import alpha_to_int
@@ -21,10 +24,26 @@ from config import adminlist
 IS_BROADCASTING = False
 
 
+@app.on_message(filters.command("cancelbroadcast") & SUDOERS)
+async def cancel_broadcast(client, message):
+    global IS_BROADCASTING
+    if not IS_BROADCASTING and not await is_broadcasting_active():
+        return await message.reply_text("No broadcast is currently running.")
+
+    IS_BROADCASTING = False
+    await unset_broadcasting_active()
+    await message.reply_text("Broadcast cancelled! The process will stop shortly.")
+
+
 @app.on_message(filters.command("broadcast") & SUDOERS)
 @language
 async def braodcast_message(client, message, _):
     global IS_BROADCASTING
+
+    # Check both memory and DB locks
+    if IS_BROADCASTING or await is_broadcasting_active():
+        return await message.reply_text("Broadcast already in progress! Use /cancelbroadcast to stop it.")
+
     if message.reply_to_message:
         x = message.reply_to_message.id
         y = message.chat.id
@@ -46,92 +65,41 @@ async def braodcast_message(client, message, _):
             return await message.reply_text(_["broad_8"])
 
     IS_BROADCASTING = True
-    await message.reply_text(_["broad_1"])
+    await set_broadcasting_active(True)
 
-    if "-nobot" not in message.text:
-        sent = 0
-        pin = 0
-        chats = []
-        schats = await get_served_chats()
-        for chat in schats:
-            chats.append(int(chat["chat_id"]))
-        for i in chats:
-            try:
-                m = (
-                    await app.forward_messages(i, y, x)
-                    if message.reply_to_message
-                    else await app.send_message(i, text=query)
-                )
-                if "-pin" in message.text:
-                    try:
-                        await m.pin(disable_notification=True)
-                        pin += 1
-                    except:
-                        continue
-                elif "-pinloud" in message.text:
-                    try:
-                        await m.pin(disable_notification=False)
-                        pin += 1
-                    except:
-                        continue
-                sent += 1
-                await asyncio.sleep(0.2)
-            except FloodWait as fw:
-                flood_time = int(fw.value)
-                if flood_time > 200:
-                    continue
-                await asyncio.sleep(flood_time)
-            except:
-                continue
-        try:
-            await message.reply_text(_["broad_3"].format(sent, pin))
-        except:
-            pass
+    try:
+        await message.reply_text(_["broad_1"])
 
-    if "-user" in message.text:
-        susr = 0
-        served_users = []
-        susers = await get_served_users()
-        for user in susers:
-            served_users.append(int(user["user_id"]))
-        for i in served_users:
-            try:
-                m = (
-                    await app.forward_messages(i, y, x)
-                    if message.reply_to_message
-                    else await app.send_message(i, text=query)
-                )
-                susr += 1
-                await asyncio.sleep(0.2)
-            except FloodWait as fw:
-                flood_time = int(fw.value)
-                if flood_time > 200:
-                    continue
-                await asyncio.sleep(flood_time)
-            except:
-                pass
-        try:
-            await message.reply_text(_["broad_4"].format(susr))
-        except:
-            pass
-
-    if "-assistant" in message.text:
-        aw = await message.reply_text(_["broad_5"])
-        text = _["broad_6"]
-        from AnnieXMedia.core.userbot import assistants
-
-        for num in assistants:
+        if "-nobot" not in message.text:
             sent = 0
-            client = await get_client(num)
-            async for dialog in client.get_dialogs():
+            pin = 0
+            chats = []
+            schats = await get_served_chats()
+            for chat in schats:
+                chats.append(int(chat["chat_id"]))
+            for i in chats:
+                if not IS_BROADCASTING: # Check for cancellation
+                    break
                 try:
-                    await client.forward_messages(
-                        dialog.chat.id, y, x
-                    ) if message.reply_to_message else await client.send_message(
-                        dialog.chat.id, text=query
+                    m = (
+                        await app.forward_messages(i, y, x)
+                        if message.reply_to_message
+                        else await app.send_message(i, text=query)
                     )
+                    if "-pin" in message.text:
+                        try:
+                            await m.pin(disable_notification=True)
+                            pin += 1
+                        except:
+                            continue
+                    elif "-pinloud" in message.text:
+                        try:
+                            await m.pin(disable_notification=False)
+                            pin += 1
+                        except:
+                            continue
                     sent += 1
-                    await asyncio.sleep(3)
+                    await asyncio.sleep(0.2)
                 except FloodWait as fw:
                     flood_time = int(fw.value)
                     if flood_time > 200:
@@ -139,12 +107,77 @@ async def braodcast_message(client, message, _):
                     await asyncio.sleep(flood_time)
                 except:
                     continue
-            text += _["broad_7"].format(num, sent)
         try:
-            await aw.edit_text(text)
+            await message.reply_text(_["broad_3"].format(sent, pin))
         except:
             pass
-    IS_BROADCASTING = False
+
+        if "-user" in message.text:
+            susr = 0
+            served_users = []
+            susers = await get_served_users()
+            for user in susers:
+                served_users.append(int(user["user_id"]))
+            for i in served_users:
+                if not IS_BROADCASTING:
+                    break
+                try:
+                    m = (
+                        await app.forward_messages(i, y, x)
+                        if message.reply_to_message
+                        else await app.send_message(i, text=query)
+                    )
+                    susr += 1
+                    await asyncio.sleep(0.2)
+                except FloodWait as fw:
+                    flood_time = int(fw.value)
+                    if flood_time > 200:
+                        continue
+                    await asyncio.sleep(flood_time)
+                except:
+                    pass
+            try:
+                await message.reply_text(_["broad_4"].format(susr))
+            except:
+                pass
+
+        if "-assistant" in message.text:
+            aw = await message.reply_text(_["broad_5"])
+            text = _["broad_6"]
+            from AnnieXMedia.core.userbot import assistants
+
+            for num in assistants:
+                if not IS_BROADCASTING:
+                    break
+                sent = 0
+                client = await get_client(num)
+                async for dialog in client.get_dialogs():
+                    if not IS_BROADCASTING:
+                        break
+                    try:
+                        await client.forward_messages(
+                            dialog.chat.id, y, x
+                        ) if message.reply_to_message else await client.send_message(
+                            dialog.chat.id, text=query
+                        )
+                        sent += 1
+                        await asyncio.sleep(3)
+                    except FloodWait as fw:
+                        flood_time = int(fw.value)
+                        if flood_time > 200:
+                            continue
+                        await asyncio.sleep(flood_time)
+                    except:
+                        continue
+                text += _["broad_7"].format(num, sent)
+            try:
+                await aw.edit_text(text)
+            except:
+                pass
+
+    finally:
+        IS_BROADCASTING = False
+        await unset_broadcasting_active()
 
 
 async def auto_clean():

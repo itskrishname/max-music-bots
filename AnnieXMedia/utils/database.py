@@ -22,6 +22,7 @@ playtypedb = mongodb.playtypedb
 skipdb = mongodb.skipmode
 sudoersdb = mongodb.sudoers
 usersdb = mongodb.tgusersdb
+broadcastdb = mongodb.broadcast
 
 
 active = []
@@ -654,3 +655,27 @@ async def remove_banned_user(user_id: int):
     if not is_gbanned:
         return
     return await blockeddb.delete_one({"user_id": user_id})
+
+
+async def is_broadcasting_active() -> bool:
+    """Checks if a broadcast is currently active."""
+    status = await broadcastdb.find_one({"type": "broadcast_status"})
+    return status.get("is_active", False) if status else False
+
+
+async def set_broadcasting_active(active: bool):
+    """Sets the broadcasting status."""
+    await broadcastdb.update_one(
+        {"type": "broadcast_status"},
+        {"$set": {"is_active": active}},
+        upsert=True
+    )
+
+
+async def unset_broadcasting_active():
+    """Unsets the broadcasting status (sets to False)."""
+    await broadcastdb.update_one(
+        {"type": "broadcast_status"},
+        {"$set": {"is_active": False}},
+        upsert=True
+    )

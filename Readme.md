@@ -286,7 +286,7 @@ docker rmi anniexmusic      # Remove image
   <a href="https://t.me/Lord_Vasudev_Krishna">
     <img src="https://img.shields.io/badge/Support_Group-Telegram-0088cc?style=for-the-badge&logo=telegram&logoColor=white" />
   </a>
-  <a href="https://t.me/CertifiedCodes">
+    <a href="https://t.me/SECRECT_BOT_UPDATES">
     <img src="https://img.shields.io/badge/Updates_Channel-Telegram-6A5ACD?style=for-the-badge&logo=telegram&logoColor=white" />
   </a>
   <a href="https://t.me/Lord_Vasudev_Krishna">

@@ -5,7 +5,7 @@ import random
 import requests
 from AnnieXMedia import app
 
-SUPPORT_CHAT = "CERTIFIEDCODERS"
+SUPPORT_CHAT = "SECRECT_BOT_UPDATES"
 SUPPORT_BTN = InlineKeyboardMarkup(
     [[InlineKeyboardButton("ꜱᴜᴘᴘᴏʀᴛ", url=f"https://t.me/{SUPPORT_CHAT}")]]
 )

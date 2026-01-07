@@ -43,7 +43,7 @@ HEROKU_API_KEY = getenv("HEROKU_API_KEY")
 
 # ── Git / updates ──────────────────────────────────────────────────────────────
 UPSTREAM_REPO = getenv("UPSTREAM_REPO", "https://github.com/itskrishname/max-music-bots")
-UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "broadcast-media-fix-8680457552247944378")
+UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "Master")
 GIT_TOKEN = getenv("GIT_TOKEN")  # needed if repo is private
 
 # ── Support links ──────────────────────────────────────────────────────────────

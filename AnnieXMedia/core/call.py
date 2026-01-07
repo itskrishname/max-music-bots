@@ -6,7 +6,7 @@ from typing import Union
 
 from ntgcalls import TelegramServerError, ConnectionNotFound
 from pyrogram import Client
-from pyrogram.errors import FloodWait, ChatAdminRequired
+from pyrogram.errors import FloodWait, ChatAdminRequired, GroupCallInvalid
 from pyrogram.types import InlineKeyboardMarkup
 from pytgcalls import PyTgCalls
 from pytgcalls.exceptions import NoActiveGroupCall, NoAudioSourceFound, NoVideoSourceFound
@@ -243,7 +243,7 @@ class Call:
 
         try:
             await assistant.play(chat_id, stream)
-        except (NoActiveGroupCall, ChatAdminRequired):
+        except (NoActiveGroupCall, ChatAdminRequired, GroupCallInvalid):
             raise AssistantErr(_["call_8"])
         except NoAudioSourceFound:
             raise AssistantErr(_["call_11"])

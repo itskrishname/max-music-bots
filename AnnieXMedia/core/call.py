@@ -252,6 +252,8 @@ class Call:
         except (ConnectionNotFound, TelegramServerError):
             raise AssistantErr(_["call_10"])
         except Exception as e:
+            if "GROUPCALL_INVALID" in str(e):
+                raise AssistantErr(_["call_8"])
             raise AssistantErr(
                 f"ᴜɴᴀʙʟᴇ ᴛᴏ ᴊᴏɪɴ ᴛʜᴇ ɢʀᴏᴜᴘ ᴄᴀʟʟ.\nRᴇᴀsᴏɴ: {e}"
             )
